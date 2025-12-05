@@ -7,8 +7,47 @@ const rings = document.getElementById('rings');
 const langPLBtn = document.getElementById('langPL');
 const langENBtn = document.getElementById('langEN');
 const mainHeader = document.getElementById('mainHeader');
+const mainHeaderEN = document.getElementById('mainHeaderEN');
+const bottomPanels = document.querySelectorAll('.bottom-panel');
+const titles = document.querySelectorAll('title');
+const footers = document.querySelectorAll('footer');
 
 let currentLang = 'pl';
+
+function updateText() {
+  mainHeader.style.display = currentLang === 'pl' ? 'block' : 'none';
+  mainHeaderEN.style.display = currentLang === 'en' ? 'block' : 'none';
+
+  titles.forEach(title => {
+    if (title.dataset.lang === currentLang) {
+      document.title = title.innerText;
+    }
+  });
+
+  panels.forEach(panel => {
+    if (panel.dataset.lang === currentLang) {
+      panel.style.display = 'block';
+    } else {
+      panel.style.display = 'none';
+    }
+  });
+
+  bottomPanels.forEach(panel => {
+    if (panel.dataset.lang === currentLang) {
+      panel.style.display = 'block';
+    } else {
+      panel.style.display = 'none';
+    }
+  });
+
+  footers.forEach(footer => {
+    if (footer.dataset.lang === currentLang) {
+      footer.style.display = 'block';
+    } else {
+      footer.style.display = 'none';
+    }
+  });
+}
 
 // Gwiazdy w tle
 function createStars(count = 150){
@@ -63,15 +102,20 @@ langPLBtn.addEventListener('click',()=>{
   currentLang='pl';
   langPLBtn.classList.add('active');
   langENBtn.classList.remove('active');
+  updateText();
+  arrangePanelsCircle();
 });
 
 langENBtn.addEventListener('click',()=>{
   currentLang='en';
   langENBtn.classList.add('active');
   langPLBtn.classList.remove('active');
+  updateText();
+  arrangePanelsCircle();
 });
 
 // Start
 createStars(200);
+updateText();
 arrangePanelsCircle();
 window.addEventListener('resize',arrangePanelsCircle);
